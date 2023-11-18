@@ -6,6 +6,7 @@ const diceImage = document.getElementById('diceImage');
 
 let totalScore = 0;
 reset.style.display = 'none';
+score.style.display = 'block';
 button.addEventListener('click', () => {
         let diceRoll = Math.floor((Math.random() * 6) + 1);
         diceImage.src = "./images/" + diceRoll + ".gif";
@@ -13,24 +14,33 @@ button.addEventListener('click', () => {
         if(diceRoll == 1)
         {
             finalResult.textContent = "Sorry you lose. Please try again!";
-            new Audio("./sounds/dice.mp3").play();
+            new Audio("./sounds/boo.mp3").play();
             totalScore = 0;
+            score.textContent = totalScore;
+            score.style.display = 'block';
             button.style.display = 'none';
             reset.style.display = 'block';
         }
-        if(diceRoll >= 20)
-        {
-            finalResult.textContent = "Congratulations! you won. Play again!";
-            totalScore = 0;
-            reset.style.display = 'block';
-        } else{
+
+        else{
             totalScore += diceRoll;
+            score.textContent = totalScore;
+        }
+
+        if(totalScore >= 20)
+        {
+            finalResult.textContent = "Congratulations! you won.";
+            new Audio("./sounds/congratulations.mp3").play();
+            score.textContent = totalScore;
+            button.style.display = 'none';
+            reset.style.display = 'block';
         }
     });
 
 reset.addEventListener('click', () => {
-    // score.textContent = 0;
     finalResult.textContent = "";
+    totalScore = 0;
+    score.textContent = totalScore;
     button.style.display = 'block';
     reset.style.display = 'none';
 });
